@@ -1,0 +1,48 @@
+﻿@model IEnumerable<AlphaApplication.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p><h2><b>Персонал</b></h2></p>
+
+<hr/>
+
+<table class="table table-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Role.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, new { @class = "btn btn-info" })
+        </td>
+    </tr>
+}
+
+</table>

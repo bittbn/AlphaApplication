@@ -1,0 +1,111 @@
+﻿@model IEnumerable<AlphaApplication.Models.Reservation>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<p><h2><b>@Html.DisplayNameFor(model => model.Room.Name): @ViewBag.Room.Name</b></h2></p>
+
+<hr />
+
+<p>
+    @Html.ActionLink("Забронировать", "Create", "Reservation", new { roomId = ViewBag.Room.Id, userId = ViewBag.User.Id }, new { @class = "btn btn-info" })
+
+    @if (User.IsInRole("Офисный менеджер"))
+    {
+        @Html.ActionLink("Редактировать", "Edit", "Rooms", new { id = ViewBag.Room.Id }, new { @class = "btn btn-info" })
+        <hr />
+    }
+</p>
+<table class="table table-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.Projector)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.Board)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.Description)
+        </th>
+    </tr>
+    <tr>
+        <th>
+            @ViewBag.Room.Seats
+        </th>
+        <th>
+            @if (ViewBag.Room.Projector == true)
+            {
+                <text>&#10004;</text>
+            }
+            else
+            {
+                <text>&#10006;</text>
+            }
+        </th>
+        <th>
+            @if (ViewBag.Room.Board == true)
+            {
+                <text>&#10004;</text>
+            }
+            else
+            {
+                <text>&#10006;</text>
+            }
+        </th>
+        <th>
+            @ViewBag.Room.Description
+        </th>
+    </tr>
+</table>
+
+@if (Model.Where(r => r.Allow == true && r.RoomId == ViewBag.Room.Id).FirstOrDefault() != null)
+{
+    <hr />
+    <p><h2><b>Забронированное время</b></h2></p>
+    <hr />
+    <table class="table table-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeEnd)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                    @Html.DisplayFor(modelItem => item.User.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeEnd)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+<hr />
+
+<div>
+    @Html.ActionLink("Вернуться к списку аудиторий", "Index")
+</div>
